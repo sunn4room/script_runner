@@ -1,0 +1,10 @@
+#!/bin/sh
+
+expr "${BASE}" : "https://" >/dev/null 2>&1 && exit 1
+
+BIN="${BASE}/run"
+DIR="${1-"${HOME}"/.local/bin}"
+
+[ ! -d "${DIR}" ] && mkdir -p "${DIR}"
+
+ln -sf "${BIN}" "${DIR}/run"
