@@ -57,3 +57,9 @@ $ sh -c "$(curl -fsSL RAWSITE/run)" - SCRIPT ARG1 ARG2 ARG3
 ```
 $ sh -c "$(wget -qO- RAWSITE/run)" - SCRIPT ARG1 ARG2 ARG3
 ```
+> add file extension for that scripts with no hook, and then:
+> ```
+> sh -c "$(wget -qO- RAWSITE/xxx.sh)" - ARG1 ARG2 ARG3
+> python -c "$(wget -qO- RAWSITE/xxx.py)" ARG1 ARG2 ARG3
+> ...
+> ```
