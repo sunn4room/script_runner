@@ -95,9 +95,9 @@ _run_post_hook() {
 }
 
 _run_script() {
-    _read "$1" | sed '/^#[<>].*/d' >"${SCRIPT_FILE}"
+    _read "$1" | sed '/^#[<>\$].*/d' >"${SCRIPT_FILE}"
     _info "$*"
-    if expr "$(basename "$1")" : "sudo-" >/dev/null 2>&1 && test "$(id -u)" -ne 0; then
+    if  _read "$1" | grep '^#\$$' >/dev/null 2>&1 && test "$(id -u)" -ne 0; then
         shift
         sudo "${SCRIPT_FILE}" "$@" </dev/tty || _error "return $?"
     else

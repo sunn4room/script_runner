@@ -35,7 +35,12 @@ support any kind of script with Shebang
 ```
 > DON'T write any variable according to the script path
 ## write sudo script
-if name of script starts with "sudo-", this script will run with root privilege
+```
+#!/bin/sh
+#$
+
+...
+```
 ## write hook
 ### pre hook
 ```
