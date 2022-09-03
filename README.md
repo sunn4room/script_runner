@@ -40,20 +40,20 @@ if name of script starts with "sudo-", this script will run with root privilege
 ### pre hook
 ```
 #!/bin/sh
-#<another_task1 arg1 arg2 arg3
-#<another_task2 arg1 arg2 arg3
+#<another_script1 arg1 arg2 arg3
+#<another_script2 arg1 arg2 arg3
 
 ...
 ```
 ### post hook
 ```
 #!/bin/sh
-#>another_task1 arg1 arg2 arg3
-#>another_task2 arg1 arg2 arg3
+#>another_script1 arg1 arg2 arg3
+#>another_script2 arg1 arg2 arg3
 
 ...
 ```
-> Task must be an relative path to your repository
+> Script must be an relative path to your repository
 ## run script
 ### run locally
 ```
