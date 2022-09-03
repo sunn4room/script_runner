@@ -1,3 +1,5 @@
 #!/bin/sh
+#<test/pre_task2
+#>test/post_task2
 
 echo task2
