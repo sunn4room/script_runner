@@ -19,9 +19,9 @@ _init() {
 	test -f "${FINISHED_FILE}" && rm "${FINISHED_FILE}"
 	touch "${FINISHED_FILE}"
 	if test "$0" = "-"; then
-		BASE="https://github.com/sunn4room/script_runner/raw/main"
+		export BASE="https://github.com/sunn4room/script_runner/raw/main"
 	else
-		BASE="$(dirname "$(readlink -f "$0")")"
+		export BASE="$(dirname "$(readlink -f "$0")")"
 	fi
 	test -z "${RUN_LOG_LEVEL}" && RUN_LOG_LEVEL=2
 }
@@ -133,7 +133,7 @@ _run() {
 
 _main() {
 	_init
-	log_file " LINE" "----------------------------------------"
+	_log_file " LINE" "----------------------------------------"
 	test "$#" -eq 0 && _error "one or more arguments are required"
 	_run "$@"
 }
