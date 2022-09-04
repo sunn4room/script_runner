@@ -19,10 +19,11 @@ _init() {
     test -f "${FINISHED_FILE}" && rm "${FINISHED_FILE}"
     touch "${FINISHED_FILE}"
     if test "$0" = "-"; then
-        export BASE="https://github.com/sunn4room/script_runner/raw/main"
+        BASE="https://github.com/sunn4room/script_runner/raw/main"
     else
-        export BASE="$(dirname "$(readlink -f "$0")")"
+        BASE="$(dirname "$(readlink -f "$0")")"
     fi
+	export BASE
     if test "${RUN_LOG_LEVEL}" = "debug"; then
         RUN_LOG_LEVEL=1
     elif test "${RUN_LOG_LEVEL}" = "info"; then
@@ -96,14 +97,17 @@ _run_post_hook() {
 
 _run_script() {
     _read "$1" | sed '/^#[<>\$].*/d' >"${SCRIPT_FILE}"
-    _info "$*"
-    if  _read "$1" | grep '^#\$$' >/dev/null 2>&1 && test "$(id -u)" -ne 0; then
-        shift
-        sudo "${SCRIPT_FILE}" "$@" </dev/tty || _error "return $?"
-    else
-        shift
-        "${SCRIPT_FILE}" "$@" </dev/tty || _error "return $?"
-    fi
+	if expr "$(head -n 1 "${SCRIPT_FILE}")" : "#\!" >/dev/null 2>&1; then
+		_info "$*"
+		if  _read "$1" | grep '^#\$$' >/dev/null 2>&1 && test "$(id -u)" -ne 0; then
+			shift
+			# shellcheck disable=SC2024
+			sudo "${SCRIPT_FILE}" "$@" </dev/tty || _error "return $?"
+		else
+			shift
+			"${SCRIPT_FILE}" "$@" </dev/tty || _error "return $?"
+		fi
+	fi
 }
 
 _run() {
